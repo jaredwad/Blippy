@@ -3,51 +3,69 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package blippy;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.shape.Circle;
 
 /**
  *
  * @author Jared
  */
-final class GameSetup extends SceneChanger 
+final class GameSetup extends SceneChanger
 {
-    
+
+    private static GameSetup mInstance;
     private Button mBtn;
-    //private final Scene scene;
-    
-    public GameSetup()
+    private Circle mCircle;
+
+    /**
+     *
+     * @param pBlippy
+     */
+    public GameSetup(Blippy pBlippy)
     {
-        super();
-//        setup();
+        super(pBlippy);
+        mInstance = this;
     }
-    
-    public Scene setup()
+
+    /**
+     *
+     * @return
+     */
+    public Circle getCircle()
+    {
+        return mCircle;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public final Scene setup()
     {
         mBtn = new Button();
-        mBtn.setText("Hello");
+        mBtn.setText("To Game");
         mBtn.setOnAction(new EventHandler<ActionEvent>()
         {
-        @Override
+            @Override
             public void handle(ActionEvent event)
             {
-                System.out.println("Hello");
+                mBlippy.setup("mGame");
             }
         });
+
         VBox box = new VBox(10);
         box.getChildren().add(mBtn);
-        
-        mRoot.add(box, 1, 1);
-        Scene scene = new Scene(mRoot, 900, 700);
-        return scene;
+
+        mPane.setBottom(box);
+
+        mScene = new Scene(mPane, Height, Length);
+        return mScene;
     }
-    
+
 }
