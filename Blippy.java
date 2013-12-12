@@ -6,62 +6,75 @@
 package blippy;
 
 import java.util.HashMap;
-import java.util.List;
+
 import javafx.application.Application;
 import javafx.application.Platform;
+
 import javafx.scene.Scene;
+
 import javafx.stage.Stage;
 
 /**
  *
  * @author Jared
  */
-public class Blippy extends Application
+public class Blippy
+        extends Application
 {
-
-    public static String screen1ID = "mStart";
-    public static String screen1File = "StartMenuFXML.fxml";
-    public static String screen2ID = "mResults";
-    public static String screen2File = "TableFXML.fxml";
-
+    /**
+     * DOCUMENT ME!
+     */
     private Stage mStage;
 
+    /**
+     * DOCUMENT ME!
+     */
     private static Blippy mInstance;
+
+    /**
+     * DOCUMENT ME!
+     */
     private final Start mStart;
+
+    /**
+     * DOCUMENT ME!
+     */
     private final Game mGame;
-    private final GameSetup mGameSetup;
+
+    /**
+     * DOCUMENT ME!
+     */
     private GameHelper mGameHelper; // not final because it resets
+
+    /**
+     * DOCUMENT ME!
+     */
     private final Results mResults;
+
+    /**
+     * DOCUMENT ME!
+     */
     private String currentScene;
 
+    /**
+     * DOCUMENT ME!
+     */
     private Boolean isColorBlind;
+
+    /**
+     * DOCUMENT ME!
+     */
     private Boolean isSoundTest;
 
+    /**
+     * DOCUMENT ME!
+     */
     private final HashMap<String, Scene> mScenes;
 
-    /**
-     *
-     * @return mStart
-     */
-    public Start getStart()
-    {
-        return mStart;
-    }
-
-    /**
-     *
-     * @return mGameSetup
-     */
-    public GameSetup getGameSetup()
-    {
-        return mGameSetup;
-    }
-
-    public String getCurrentScene()
-    {
-        return currentScene;
-    }
     
+    /**
+     * Creates a new Blippy object.
+     */
     public Blippy()
     {
         super();
@@ -72,14 +85,33 @@ public class Blippy extends Application
 
         mStart = new Start(this);
         mGame = new Game(this, isColorBlind, isSoundTest);
-        mGameSetup = new GameSetup(this);
         mResults = new Results(this);
         mGameHelper = new GameHelper(this, mGame);
-        mScenes = new HashMap<>();
+        mScenes = new HashMap<String, Scene>();
+    }
+    
+    /////////////////////////////////////////////////////////// Getters
 
+    
+    /**
+     *
+     * @return mStart
+     */
+    public Start getStart()
+    {
+        return mStart;
     }
 
-/////////////////////////////////////////////////////////// Getters
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getCurrentScene()
+    {
+        return currentScene;
+    }
+
     /**
      *
      * @return mInstance
@@ -87,7 +119,6 @@ public class Blippy extends Application
     public static Blippy getInstance()
     {
         return mInstance;
-
     }
 
     /**
@@ -110,12 +141,17 @@ public class Blippy extends Application
         return isSoundTest;
     }
 
-    public List<Double> getFormatedResults()
+    /**
+     * DOCUMENT ME!
+     * used?
+     * @return DOCUMENT ME!
+     */
+    public double[] getResults()
     {
-        return mGameHelper.getFormatedResults();
+        return mGameHelper.getResults();
     }
 
-/////////////////////////////////////////////////////////// Setters
+    /////////////////////////////////////////////////////////// Setters
     /**
      *
      *
@@ -135,7 +171,7 @@ public class Blippy extends Application
         isSoundTest = pIsSoundTest;
     }
 
-////////////////////////////////////////////////////////// Main Functions
+    ////////////////////////////////////////////////////////// Main Functions
     /**
      *
      *
@@ -155,30 +191,51 @@ public class Blippy extends Application
         // Overwrites the scene in the hashmap
         addScene("mGame", mGame.setup());
 
-        if (mGameHelper.isTimelineSet())
+        if( mGameHelper.isTimelineSet() )
         {
             // Reset the game
             mGameHelper.killTimeline();
         }
+
         mGameHelper = new GameHelper(this, mGame);
         setup("mGame");
     }
     
+    /**
+     * 
+     */
+    public void stopGame()
+    {
+        mGameHelper.killTimeline();
+    }
+
+    /**
+     * DOCUMENT ME!
+     */
     public void showAbout()
     {
         String message = "\n                 Created by "
-                + "\n                Josh Comish, "
-                + "\n              Jared Wadworth,\n "
-                + "           and John Michelsen \n"
-                + " in December of 2013 for Mr. Call\n";
+                         + "\n                Josh Comish, "
+                         + "\n              Jared Wadworth,\n "
+                         + "           and John Michelsen \n"
+                         + " in December of 2013 for Mr. Call\n";
         mGameHelper.pauseGame(message);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void generateResults()
     {
-        mResults.setResults(mGameHelper.getFormatedResults());
-        addScene("mResults", mResults.setup());
-        setup("mResults");
+        // this ensures that results are only generated when
+        // they are expected, and that the game doesn't call 
+        // this in the background
+        if( getCurrentScene() == "mGame" )
+        {
+            mResults.setResults(mGameHelper.getResults());
+            addScene("mResults", mResults.setup());
+            setup("mResults");
+        }
     }
 
     /**
@@ -186,15 +243,11 @@ public class Blippy extends Application
      */
     private void initializeScenes()
     {
+        // sets up start screen
+        addScene("mStart", mStart.setup());
+        
         // sets up the game screen
         addScene("mGame", mGame.setup());
-        
-        addScene("mStart", mStart.setup());
-
-        // sets up FXML
-//        ScreensController mainContainer = new ScreensController(this);
-//        addScene(screen1ID, mainContainer.loadScreen(Blippy.screen1ID,
-//                                                     Blippy.screen1File));
     }
 
     /**
@@ -215,7 +268,7 @@ public class Blippy extends Application
     {
         Scene scene = mScenes.get(pName);
         mStage.setScene(scene);
-        
+
         currentScene = pName;
 
         if( pName == "mGame" )
@@ -240,13 +293,14 @@ public class Blippy extends Application
      * @throws java.lang.InterruptedException
      */
     @Override
-    public void start(Stage primaryStage) throws InterruptedException
+    public void start(Stage primaryStage)
+            throws InterruptedException
     {
         mStage = primaryStage;
 
         initializeScenes();
 
-        setup(screen1ID);
+        setup("mStart");
 
         mStage.setTitle("Blippy");
         mStage.show();

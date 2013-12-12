@@ -6,9 +6,13 @@
 package blippy;
 
 import java.util.*;
+
 import javafx.animation.*;
+
 import javafx.event.*;
+
 import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
@@ -18,8 +22,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import javafx.util.Duration;
 
 /**
@@ -28,254 +34,276 @@ import javafx.util.Duration;
  */
 public class GameHelper
 {
+   /**
+    * DOCUMENT ME!
+    */
+   private final Blippy mBlippy;
 
-    private final Blippy mBlippy;
-    private final Game mGame;
-    private double mResults[];
-    private List<Double> mFormatedResults;
-//   private final double mLeftResults[];
+   /**
+    * DOCUMENT ME!
+    */
+   private final Game mGame;
 
-    private long mStartTime;
-    private long mEndTime;
+   /**
+    * DOCUMENT ME!
+    */
+   private final double[] mResults;
 
-    private final int mGameIterations;
+   /**
+    * DOCUMENT ME!
+    */
+   private long mStartTime;
 
-    private Boolean isClicked;
-    private List<Long> mTimeSnapshots;
-    private EventHandler<ActionEvent> mOnFinished;
-    private int mCountChanges;
-    private static final int WAIT_PERIOD = 3000;
+   /**
+    * DOCUMENT ME!
+    */
+   private long mEndTime;
 
-    private Timeline mTimeline;
-    private Timeline clickTimer;
-    /**
-     * The beep mp3 file.
-     */
-    private final Media error;
+   /**
+    * DOCUMENT ME!
+    */
+   private final int mGameIterations;
 
-    /**
-     * Will play the beep mp3.
-     */
-    private MediaPlayer mp;
+   /**
+    * DOCUMENT ME!
+    */
+   private Boolean isClicked;
 
-    /**
-     *
-     * @param pBlippy
-     * @param pGame
-     */
-    public GameHelper(Blippy pBlippy, Game pGame)
-    {
-        mBlippy = pBlippy;
-//        mTimeline = null;
-        mGame = pGame;
-        error = new Media(getClass().getResource("error.mp3").toString());
-        mp = new MediaPlayer(error);
-        mGameIterations = 7;
-        mCountChanges = 0;
-        mStartTime = 0;
-        mEndTime = 0;
-        mResults = new double[mGameIterations];
-//      mLeftResults    = new double[mGameIterations / 2];
-        mTimeSnapshots = new ArrayList<>();
-        mOnFinished = new EventHandler<ActionEvent>()
-        {
-            public void handle(ActionEvent e)
+   /**
+    * DOCUMENT ME!
+    */
+   private final EventHandler<ActionEvent> mOnFinished;
+
+   /**
+    * DOCUMENT ME!
+    */
+   private int mCountChanges;
+
+   /**
+    * DOCUMENT ME!
+    */
+   private static final int WAIT_PERIOD = 3000;
+
+   /**
+    * DOCUMENT ME!
+    */
+   private Timeline mTimeline;
+
+   /**
+    * NOT YET IMPLEMENTED!!!
+    * 
+    * this is the timer to "click" if the user doesn't
+    * after 5 seconds
+    */
+   private Timeline clickTimer;
+
+   /**
+    * The beep mp3 file.
+    */
+   private final Media error;
+
+   /**
+    * Will play the beep mp3.
+    */
+   private MediaPlayer mp;
+
+   /**
+    *
+    * @param pBlippy
+    * @param pGame
+    */
+   public GameHelper(Blippy pBlippy, Game pGame)
+   {
+      mBlippy = pBlippy;
+      mGame = pGame;
+      error = new Media(getClass().getResource("error.mp3").toString());
+      mp = new MediaPlayer(error);
+      mGameIterations = 7;
+      mCountChanges   = 0;
+      mStartTime      = 0;
+      mEndTime        = 0;
+      mResults = new double[mGameIterations];
+      mOnFinished =
+         new EventHandler<ActionEvent>()
             {
-                mGame.setIsReadyToBeClicked(true);
-                mGame.swapCircle();
-//               mTimeSnapshots.add(System.nanoTime());
-                mStartTime = System.nanoTime();
+               public void handle(ActionEvent e)
+               {
+                  mGame.setIsReadyToBeClicked(true);
+                  mGame.swapCircle();
+                  mStartTime = System.nanoTime();
+               }
+            };
+   }
 
-                // is the first one not subtracting the start time?
-            /*
-                 * if( mCountChanges - 1 < (mGameIterations / 2) ) {
-                 * mRightResults[mCountChanges - 1] = (float) (mEndTime -
-                 * mStartTime) / 1000000000; } else {
-                 * mLeftResults[(mCountChanges - 1) % (mGameIterations / 2)] =
-                 * (float) (mEndTime - mStartTime) / 1000000000; }
-                 */
-            }
-        };
-    }
+   /**
+    *
+    * @param pBool
+    */
+   public void setIsClicked(Boolean pBool)
+   {
+      isClicked = pBool;
+   }
 
-    /**
-     *
-     * @param pBool
-     */
-    public void setIsClicked(Boolean pBool)
-    {
-        isClicked = pBool;
-    }
+   /**
+    * DOCUMENT ME!
+    *
+    * @return DOCUMENT ME!
+    */
+   public Boolean isTimelineSet()
+   {
+      return (mTimeline != null);
+   }
 
-    public Boolean isTimelineSet()
-    {
-        return (mTimeline != null);
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public Boolean getIsClicked()
-    {
-        return isClicked;
-    }
+   /**
+    *
+    * @return
+    */
+   public Boolean getIsClicked()
+   {
+      return isClicked;
+   }
+   
+   /**
+    * 
+    * @return 
+    */
+   public double[] getResults()
+   {
+       return mResults;
+   }
 
-    public List<Double> getFormatedResults()
-    {
-        return mFormatedResults;
-    }
+   /**
+    * DOCUMENT ME!
+    */
+   public void killTimeline()
+   {
+      mTimeline.stop();
+      mTimeline = null;
+   }
 
-    /**
-     *
-     * @return
-     */
-    public boolean readFile()
-    {
-        return true;
-    }
+   /**
+    * DOCUMENT ME!
+    *
+    * @param pMessage DOCUMENT ME!
+    */
+   public synchronized void pauseGame(String pMessage)
+   {
+      // if they were supposed to click,
+      // reset the circle so the timer resets
+      if (! mGame.getIsStartCircle())
+      {
+         mGame.swapCircle();
+      }
 
-    /**
-     *
-     * @return
-     */
-    public boolean writeFile()
-    {
-        return true;
-    }
+      // resets the mTimeline
+      if (mTimeline != null)
+      {
+         mTimeline.stop();
+      }
 
-    public void killTimeline()
-    {
-        mTimeline.stop();
-        mTimeline = null;
-    }
+      final Stage errorWindow = new Stage(StageStyle.UNDECORATED);
 
-    public synchronized void pauseGame(String pMessage)
-    {
-        // if they were supposed to click,
-        // reset the circle so the timer resets
-        if( !mGame.getIsStartCircle() )
-        {
-            mGame.swapCircle();
-        }
+      BorderPane pane = new BorderPane();
 
-        // resets the mTimeline
-        if(mTimeline != null)
-             mTimeline.stop();
+      Button btn = new Button("Resume Game");
 
-        final Stage errorWindow = new Stage(StageStyle.UNDECORATED);
-
-        BorderPane pane = new BorderPane();
-
-        Button btn = new Button("Resume Game");
-
-        btn.setOnAction(new EventHandler<ActionEvent>()
-        {
+      btn.setOnAction(new EventHandler<ActionEvent>()
+         {
             @Override
             public void handle(ActionEvent event)
             {
-                if(mTimeline != null)
-                    mTimeline.playFromStart();
-                errorWindow.close();
+               if (mTimeline != null)
+               {
+                  mTimeline.playFromStart();
+               }
+
+               errorWindow.close();
             }
-        });
+         });
 
-        Text message = new Text(10, 10, pMessage);
+      Text message = new Text(10, 10, pMessage);
 
-        VBox box = new VBox();
+      VBox box = new VBox();
 
-        box.getChildren().addAll(message, btn);
+      box.getChildren().addAll(message, btn);
 
-        pane.setTop(message);
-        pane.setCenter(btn);
-        pane.setAlignment(message, Pos.CENTER);
+      pane.setTop(message);
+      pane.setCenter(btn);
+      BorderPane.setAlignment(message, Pos.CENTER);
 
-        errorWindow.setScene(new Scene(pane, 300, 150));
+      errorWindow.setScene(new Scene(pane, 300, 150));
 
-        errorWindow.show();
-    }
+      errorWindow.show();
+   }
 
-    /**
-     * synchronized because the Timeline.stop() method is not
-     */
-    public synchronized void game()
-    {
-        // The handler for the circle
-        // this is when they click
-        EventHandler handler = new EventHandler<Event>()
-        {
+   /**
+    * synchronized because the Timeline.stop() method is not
+    */
+   public synchronized void game()
+   {
+      // The handler for the circle
+      // this is when they click
+      EventHandler handler =
+         new EventHandler<Event>()
+         {
             @Override
             public void handle(Event e)
             {
-                // Olny allow if the game is ready
-                if( mGame.isReadyToBeClicked() )
-                {
-                    // add time to the list (start timer)
-//                   mTimeSnapshots.add(System.nanoTime());
-                    mEndTime = System.nanoTime();
-                    mResults[mCountChanges - 1]
-                    = ((double) mEndTime - mStartTime) / 1000000000;
+               // Olny allow if the game is ready
+               if (mGame.isReadyToBeClicked())
+               {
+                  // add time to the list (start timer)
+                  mEndTime = System.nanoTime();
 
-                    mStartTime = 0;
-                    mEndTime = 0;
-                    // Set up handler
-                    mGame.setIsReadyToBeClicked(false);
-                    mGame.swapCircle();
-                    // ie. go to game
-                    doRandomCircleChange();
-                }
-                else
-                {
-                    mp = new MediaPlayer(error);
-                    mp.play();
+                  mResults[mCountChanges - 1] = ((double) mEndTime -
+                     mStartTime) / 1000000000;
 
-                    pauseGame("Don't click before it changes dummy!");
-                }
+                  mStartTime = 0;
+                  mEndTime = 0;
+                  // Set up handler
+                  mGame.setIsReadyToBeClicked(false);
+                  mGame.swapCircle();
+                  // ie. go to game
+                  doRandomCircleChange();
+               }
+               else
+               {
+                  mp = new MediaPlayer(error);
+                  mp.play();
+
+                  pauseGame("Don't click before it changes!");
+               }
             }
-        };
+         };
 
-        mGame.getPane().addEventHandler(MouseEvent.MOUSE_PRESSED, handler);
-        mGame.getPane().addEventHandler(KeyEvent.KEY_PRESSED, handler);
-        mGame.getPane().requestFocus();
+      mGame.getPane().addEventHandler(MouseEvent.MOUSE_PRESSED, handler);
+      mGame.getPane().addEventHandler(KeyEvent.KEY_PRESSED, handler);
+      mGame.getPane().requestFocus();
 
-        // Start it off
-        doRandomCircleChange();
-    }
+      // Start it off
+      doRandomCircleChange();
+   }
 
-    /**
-     *
-     */
-    private void doRandomCircleChange()
-    {
-        // Go through 7 times
-        if( mCountChanges++ >= mGameIterations )
-        {
-            // Send captured times to results
-//         System.out.println(mGameIterations);
-//         System.out.println(mCountChanges);
-//         System.out.println(mTimeSnapshots.size());
-//         System.out.println(mTimeSnapshots);
-
-            mFormatedResults = new ArrayList<>();
-            System.out.println("\nResults:");
-            for( double item : mResults )
-            {
-                mFormatedResults.add(item);
-            }
-
-            mBlippy.generateResults();
-
-        } // The actual game
-        else
-        {
-            // Timer
-            int x = new Random().nextInt(WAIT_PERIOD) + 2000;
-            Duration duration = Duration.millis(x);
-            KeyFrame keyFrame = new KeyFrame(duration, mOnFinished,
-                                             (KeyValue[]) null);
-            mTimeline = new Timeline();
-            mTimeline.getKeyFrames().add(keyFrame);
-            mTimeline.play();
-        }
-    }
+   /**
+    *
+    */
+   private void doRandomCircleChange()
+   {
+      // Go through 7 times
+      if (mCountChanges++ >= mGameIterations)
+      {
+         mBlippy.generateResults();
+      } // The actual game
+      else
+      {
+         // Timer
+         int x = new Random().nextInt(WAIT_PERIOD) + 2000;
+         Duration duration = Duration.millis(x);
+         KeyFrame keyFrame =
+            new KeyFrame(duration, mOnFinished, (KeyValue[]) null);
+         mTimeline = new Timeline();
+         mTimeline.getKeyFrames().add(keyFrame);
+         mTimeline.play();
+      }
+   }
 }
