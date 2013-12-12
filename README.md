@@ -1,9 +1,9 @@
 Blippy
 ======
 
-Blippy project created for Proffesor Rick Neff in CS 246 'Software Design and Developement'
+Blippy was a project created for Proffesor Rick Neff in CS 246 'Software Design and Developement'
 
-Blippy was designed for Mister Call at Madison Highschool in Rexburg, ID for his advanced placement anatomy and
+It was designed for Mister Call at Madison Highschool in Rexburg, ID for his advanced placement anatomy and
 physiology course to test each student's reaction time.
 
 Blippy supports a number of different options including a colorblind test, a sound test, and various game options
