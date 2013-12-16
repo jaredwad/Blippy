@@ -1,0 +1,54 @@
+
+                                       git/gitlab Instructions
+			       
+You should all have received an invitation to membership on my installation of gitlab, which is very similar to github, but which is open sourced and allows me to set my own settings.
+
+Here is what you will need to do to get access to view/edit your projects:
+
+1. Install git on your machine. There are numerous how-to's out there, find one for your OS and do it. Make sure you have version 1.7.10 or later (run: git --version).
+
+2. Login to your account on the firstthreeodds.org gitlab server.
+
+4. Follow the instructions on the site (under the tab "Git Access") to clone the repository locally.
+   Push the http button to show the URL to use (something like http://firstthreeodds.org/root/aimer.git)
+   where you would replace 'aimer' with your project's repository name.
+
+5. Make changes. Add good code, remove bad code.
+
+4. Review your changes (using "git status" and "git diff <filename>", with <filename> matching what "git status" printed)
+
+5. Stash your changes (run: git stash)
+
+6. Pull the freshest code (run: git pull origin master) This ensures you don't overwrite someone else's changes; you get their changes before you push.
+
+7. Apply your changes back in and resolve any problems using your favorite text editor (run: git stash apply)
+
+8. Add each of the changes you want to keep (run: git add <filename>)
+
+9. Commit your changes (run: git commit -m 'tweet about what you changed')
+
+10. Just to be safe, pull the fresh code again (see more below). This will not overwrite your commits; if there are conflicts, git will ask you to resolve them.
+
+11. Push your changes to the origin (run: git push origin master)
+
+12. Done! Start back at step 2, rinse, repeat, until the project is deemed finished.
+
+Here is more information about these (and more) git commands:
+
+git pull origin master  # Pulls changes from the server that have been made since you last grabbed the code
+
+git status              # Displays a list of all the files that have been changed and the number of changes you have committed.
+
+git add <filename>      # Adds a file you have changed to the list of changes to be committed.
+
+git diff <filename>     # Can be run without a filename argument, but this is not recommended; shows the changes you have made to a given file
+
+git commit <options> -m 'commit message'    # commits your staged changes; this does not put them in the master branch's code yet! It just gets the changes ready to go. Available options can be found by running git --help, but the only one you will probably ever need to worry about is "-a", which commits all changes you have made, even if they are not staged for commit with "git add <filename>"
+
+git checkout <filename> # revert all changes to a file
+
+git checkout .          # revert all unstaged changes. Note: checkout doesn't change committed or staged changes. You should look up how to un-stage a change you staged using "git add".  Also, if you committed something and you didn't mean to, that can also be undone. However, I'll leave it to you to figure out how to do this.
+
+git stash               # Stashes changes away so you can run "git pull origin master" without killing your code; if there are changes to files in the master branch that conflict with changes you have made, this allows you to keep your changes safe while you pull the fresh code.
+
+git stash apply         # applies the changes you have in your stash stack. You can run git stash several times; it acts like a stack. If this is confusing to you, don't worry; just use git stash and git stash apply the same number of times, and you won't run into any issues.
