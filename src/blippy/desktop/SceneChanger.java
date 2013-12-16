@@ -2,6 +2,7 @@ package blippy.desktop;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
@@ -17,7 +18,7 @@ import javafx.scene.layout.VBox;
  * @author Jared
  */
 public abstract class SceneChanger
-{  
+{
    /**
     * instance of the main Blippy class.
     */
@@ -130,7 +131,6 @@ public abstract class SceneChanger
                {
                   mBlippy.pauseGame("~ PAUSED ~");
                }
-               
             }
          });
 
@@ -215,5 +215,4 @@ public abstract class SceneChanger
     * @return
     */
    public abstract Scene setup();
-
 }

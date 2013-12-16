@@ -1,7 +1,7 @@
-
 package blippy.desktop;
 
 import blippy.system.*;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;

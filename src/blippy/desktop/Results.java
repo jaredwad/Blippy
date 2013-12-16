@@ -1,12 +1,15 @@
-
 package blippy.desktop;
 
 import java.text.DecimalFormat;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
 import javafx.geometry.Insets;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -79,11 +82,12 @@ class Results
 
          string = " Click " + clickNumber + "                  " +
             formater.format(item) + " seconds";
-         
+
          if (item >= 5.0)
          {
-             string += " (No User Input)";
+            string += " (No User Input)";
          }
+
          text = new Text(string);
 
          // not doing anything

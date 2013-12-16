@@ -1,317 +1,323 @@
 package blippy.desktop;
 
 import java.util.HashMap;
+
 import javafx.application.Application;
 import javafx.application.Platform;
+
 import javafx.scene.Scene;
+
 import javafx.stage.Stage;
 
 /**
  * This is the main class for the Blippy program,
  * it will initialize everything required for the
  * program to run.
- * 
+ *
  * @author Jared
  */
 public class Blippy
-        extends Application
+   extends Application
 {
-    /**
-     * Stage for Blippy
-     */
-    private Stage mStage;
+   /**
+    * Stage for Blippy
+    */
+   private Stage mStage;
 
-    /**
-     * The blippy class itself.
-     */
-    private static Blippy mInstance;
+   /**
+    * An Instance of the blippy class itself.
+    */
+   private static Blippy mInstance;
 
-    /**
-     * Start object.
-     */
-    private final Start mStart;
+   /**
+    * Start object.
+    */
+   private final Start mStart;
 
-    /**
-     * Game object.
-     */
-    private final Game mGame;
+   /**
+    * Game object.
+    */
+   private final Game mGame;
 
-    /**
-     * Gamehelper controller. Not final because
-     * it resets.
-     */
-    private GameHelper mGameHelper;
+   /**
+    * Gamehelper controller.
+    * Not final because it resets.
+    */
+   private GameHelper mGameHelper;
 
-    /**
-     * Results of the test.
-     */
-    private final Results mResults;
+   /**
+    * Results of the test.
+    */
+   private final Results mResults;
 
-    /**
-     * The current scene.
-     */
-    private String currentScene;
+   /**
+    * The current scene.
+    */
+   private String currentScene;
 
-    /**
-     * to determine if colorblind.
-     */
-    private Boolean isColorBlind;
+   /**
+    * A boolean to show if the colorblind
+    * option was selected.
+    */
+   private Boolean isColorBlind;
 
-    /**
-     * to determine if sound test.
-     */
-    private Boolean isSoundTest;
+   /**
+    * A boolean to show if the SoundTest
+    * option was selected
+    */
+   private Boolean isSoundTest;
 
-    /**
-     * Storage for scenes.
-     */
-    private final HashMap<String, Scene> mScenes;
+   /**
+    * Storage for scenes.
+    */
+   private final HashMap<String, Scene> mScenes;
 
-    
-    /**
-     * Creates a new Blippy object.
-     */
-    public Blippy()
-    {
-        super();
+   /**
+    * Constructor: 
+    * Creates a new Blippy object.
+    */
+   public Blippy()
+   {
+      super();
 
-        mInstance = this;
-        isColorBlind = false;
-        isSoundTest = false;
+      mInstance = this;
+      isColorBlind = false;
+      isSoundTest = false;
 
-        mStart = new Start(this);
-        mGame = new Game(this);
-        mResults = new Results(this);
-        mGameHelper = new GameHelper(this, mGame);
-        mScenes = new HashMap<String, Scene>();
-    }
-    
-    /////////////////////////////////////////////////////////// Getters
+      mStart = new Start(this);
+      mGame = new Game(this);
+      mResults = new Results(this);
+      mGameHelper = new GameHelper(this, mGame);
+      mScenes = new HashMap<String, Scene>();
+   }
 
-    
-    /**
-     * Getter for mStart.
-     * 
-     * @return mStart
-     */
-    public Start getStart()
-    {
-        return mStart;
-    }
+   /////////////////////////////////////////////////////////// Getters
 
-    /**
-     * Getter for currentScene.
-     *
-     * @return mGameSetup
-     */
-    public String getCurrentScene()
-    {
-        return currentScene;
-    }
+   /**
+    * Getter for mStart.
+    *
+    * @return mStart
+    */
+   public Start getStart()
+   {
+      return mStart;
+   }
 
-    /**
-     * Getter for mInstance.
-     * 
-     * @return mInstance
-     */
-    public static Blippy getInstance()
-    {
-        return mInstance;
-    }
+   /**
+    * Getter for currentScene.
+    *
+    * @return mGameSetup
+    */
+   public String getCurrentScene()
+   {
+      return currentScene;
+   }
 
-    /**
-     * Getter for isColorBlind.
-     *
-     * @return isColorBlind
-     */
-    public Boolean getIsColorBlind()
-    {
-        return isColorBlind;
-    }
+   /**
+    * Getter for mInstance.
+    *
+    * @return mInstance
+    */
+   public static Blippy getInstance()
+   {
+      return mInstance;
+   }
 
-    /**
-     * Getter for isSoundTest.
-     *
-     * @return isSoundTest
-     */
-    public Boolean getIsSoundTest()
-    {
-        return isSoundTest;
-    }
+   /**
+    * Getter for isColorBlind.
+    *
+    * @return isColorBlind
+    */
+   public Boolean getIsColorBlind()
+   {
+      return isColorBlind;
+   }
 
-    /**
-     * Getter for Results.
-     *
-     * @return mGameHelper.getResults
-     */
-    public double[] getResults()
-    {
-        return mGameHelper.getResults();
-    }
+   /**
+    * Getter for isSoundTest.
+    *
+    * @return isSoundTest
+    */
+   public Boolean getIsSoundTest()
+   {
+      return isSoundTest;
+   }
 
-    /////////////////////////////////////////////////////////// Setters
-    /**
-     * Setter for isColorblind
-     *
-     * @param pIsColorBlind
-     */
-    public void setIsColorBlind(Boolean pIsColorBlind)
-    {
-        isColorBlind = pIsColorBlind;
-    }
+   /**
+    * Getter for Results.
+    *
+    * @return mGameHelper.getResults
+    */
+   public double[] getResults()
+   {
+      return mGameHelper.getResults();
+   }
 
-    /**
-     * Setter for isSoundTest
-     *
-     * @param pIsSoundTest
-     */
-    public void setIsSoundTest(Boolean pIsSoundTest)
-    {
-        isSoundTest = pIsSoundTest;
-    }
+   /////////////////////////////////////////////////////////// Setters
+   /**
+    * Setter for isColorblind
+    *
+    * @param pIsColorBlind
+    */
+   public void setIsColorBlind(Boolean pIsColorBlind)
+   {
+      isColorBlind = pIsColorBlind;
+   }
 
-    ////////////////////////////////////////////////////////// Main Functions
-    /**
-     * Calls pauseGame in mGameHelper
-     *
-     * @param pMessage
-     */
-    public void pauseGame(String pMessage)
-    {
-        mGameHelper.pauseGame(pMessage);
-    }
+   /**
+    * Setter for isSoundTest
+    *
+    * @param pIsSoundTest
+    */
+   public void setIsSoundTest(Boolean pIsSoundTest)
+   {
+      isSoundTest = pIsSoundTest;
+   }
 
-    /**
-     *  Resets the game and resets the timer.
-     */
-    public void resetGame()
-    {
-        // Overwrites the scene in the hashmap
-        addScene("mGame", mGame.setup());
+   ////////////////////////////////////////////////////////// Main Functions
+   /**
+    * Calls pauseGame in mGameHelper
+    *
+    * @param pMessage
+    */
+   public void pauseGame(String pMessage)
+   {
+      mGameHelper.pauseGame(pMessage);
+   }
 
-        if( mGameHelper.isTimelineSet() )
-        {
-            // Reset the game
-            mGameHelper.killTimeline();
-        }
+   /**
+    *  Resets the game and resets the timer.
+    */
+   public void resetGame()
+   {
+      // Overwrites the scene in the hashmap
+      addScene("mGame", mGame.setup());
 
-        mGameHelper = new GameHelper(this, mGame);
-        setup("mGame");
-    }
-    
-    /**
-     * Stops the time and resets the timer.
-     */
-    public void stopGame()
-    {
-        mGameHelper.killTimeline();
-    }
+      if (mGameHelper.isTimelineSet())
+      {
+         // Kill the timer
+         mGameHelper.killTimeline();
+      }
 
-    /**
-     * Will bring up about page.
-     */
-    public void showAbout()
-    {
-        String message = "\n                 Created by "
-                         + "\n               Joshua Comish, "
-                         + "\n              Jared Wadworth,\n "
-                         + "           and John Michelsen \n"
-                         + " in December of 2013 for Mr. Call\n";
-        mGameHelper.pauseGame(message);
-    }
+      // Reset the game
+      mGameHelper = new GameHelper(this, mGame);
+      setup("mGame");
+   }
 
-    /**
-     * Builds the results screen.
-     */
-    public void generateResults()
-    {
-        // this ensures that results are only generated when
-        // they are expected, and that the game doesn't call 
-        // this in the background
-        if( getCurrentScene() == "mGame" )
-        {
-            mResults.setResults(mGameHelper.getResults());
-            addScene("mResults", mResults.setup());
-            setup("mResults");
-        }
-    }
+   /**
+    * Stops the time and resets the timer.
+    */
+   public void stopGame()
+   {
+      mGameHelper.killTimeline();
+   }
 
-    /**
-     * Sets up the screens for the program.
-     */
-    private void initializeScenes()
-    {
-        // sets up start screen
-        addScene("mStart", mStart.setup());
-        
-        // sets up the game screen
-        addScene("mGame", mGame.setup());
-    }
+   /**
+    * Will bring up about page.
+    */
+   public void showAbout()
+   {
+      String message =
+         "\n                 Created by " +
+         "\n               Joshua Comish, " +
+         "\n              Jared Wadworth,\n " +
+         "           and John Michelsen \n" +
+         " in December of 2013 for Mr. Call\n";
+      mGameHelper.pauseGame(message);
+   }
 
-    /**
-     * Adds a scene.
-     * @param pName
-     * @param pScene
-     */
-    private void addScene(String pName, Scene pScene)
-    {
-        mScenes.put(pName, pScene);
-    }
+   /**
+    * Builds the results screen.
+    */
+   public void generateResults()
+   {
+      // this ensures that results are only generated when
+      // they are expected, and that the game doesn't call 
+      // this in the background
+      if (getCurrentScene() == "mGame")
+      {
+         mResults.setResults(mGameHelper.getResults());
+         addScene("mResults", mResults.setup());
+         setup("mResults");
+      }
+   }
 
-    /**
-     * Builds all instances of all objects.
-     *
-     * @param pName  
-     */
-    public void setup(String pName)
-    {
-        Scene scene = mScenes.get(pName);
-        mStage.setScene(scene);
+   /**
+    * Sets up the screens for the program.
+    */
+   private void initializeScenes()
+   {
+      // sets up start screen
+      addScene("mStart", mStart.setup());
 
-        currentScene = pName;
+      // sets up the game screen
+      addScene("mGame", mGame.setup());
+   }
 
-        if( pName == "mGame" )
-        {
-            Platform.runLater(new Runnable()
+   /**
+    * Adds a scene.
+    * @param pName
+    * @param pScene
+    */
+   private void addScene(String pName, Scene pScene)
+   {
+      mScenes.put(pName, pScene);
+   }
+
+   /**
+    * Builds all instances of all objects.
+    *
+    * @param pName
+    */
+   public void setup(String pName)
+   {
+      Scene scene = mScenes.get(pName);
+      mStage.setScene(scene);
+
+      currentScene = pName;
+
+      if (pName == "mGame")
+      {
+         Platform.runLater(new Runnable()
             {
-                @Override
-                public void run()
-                {
-                    mGameHelper.game();
-                }
+               @Override
+               public void run()
+               {
+                  mGameHelper.game();
+               }
             });
-        }
-    }
+      }
+   }
 
-    /**
-     * Start is the main start off point for blippy. It gets the stage, and
-     * prepares all the other classes scenes. It grabs and displays the start
-     * scene, and from there the user controls where it goes.
-     *
-     * @param primaryStage
-     * @throws java.lang.InterruptedException
-     */
-    @Override
-    public void start(Stage primaryStage)
-            throws InterruptedException
-    {
-        mStage = primaryStage;
+   /**
+    * Start is the main start off point for blippy. It gets the stage, and
+    * prepares all the other classes scenes. It grabs and displays the start
+    * scene, and from there the user controls where it goes.
+    *
+    * @param primaryStage
+    * @throws java.lang.InterruptedException
+    */
+   @Override
+   public void start(Stage primaryStage)
+      throws InterruptedException
+   {
+      mStage = primaryStage;
 
-        initializeScenes();
+      initializeScenes();
 
-        setup("mStart");
+      setup("mStart");
 
-        mStage.setTitle("Blippy");
-        mStage.show();
-    }
+      mStage.setTitle("Blippy");
+      mStage.show();
+   }
 
-    /**
-     * The main() method is ignored in JavaFX applications.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
-    {
-        launch(args);
-    }
+   /**
+    * The main() method is ignored in JavaFX applications.
+    *
+    * @param args the command line arguments
+    */
+   public static void main(String[] args)
+   {
+      launch(args);
+   }
 }
