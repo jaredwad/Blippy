@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package blippy;
+package blippy.desktop;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
@@ -19,55 +13,55 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**
- *
+ * Changes the scene as prompted.
  * @author Jared
  */
 public abstract class SceneChanger
-{
+{  
    /**
-    * DOCUMENT ME!
+    * instance of the main Blippy class.
     */
    protected Blippy mBlippy;
 
    /**
-    * DOCUMENT ME!
+    * String of instructions.
     */
    protected String mInstructions;
 
    /**
-    * DOCUMENT ME!
+    * Instance of the scene.
     */
    protected Scene mScene;
 
    /**
-    * DOCUMENT ME!
+    * Where the scenes are placed.
     */
    protected Group mRoot;
 
    /**
-    * DOCUMENT ME!
+    * BorderPane to display.
     */
    protected BorderPane mPane;
 
    /**
-    * DOCUMENT ME!
+    * Menu bar.
     */
    protected VBox mMenu;
 
    /**
-    * DOCUMENT ME!
+    * Height of the window.
     */
    protected final int Height;
 
    /**
-    * DOCUMENT ME!
+    * Length of the window.
     */
    protected final int Length;
 
    /**
     * Creates a new SceneChanger object.
     *
-    * @param pBlippy DOCUMENT ME!
+    * @param pBlippy
     */
    public SceneChanger(Blippy pBlippy)
    {
@@ -81,9 +75,9 @@ public abstract class SceneChanger
    }
 
    /**
-    * DOCUMENT ME!
+    * Getter for mPane.
     *
-    * @return DOCUMENT ME!
+    * @return mPane
     */
    public BorderPane getPane()
    {
@@ -91,7 +85,7 @@ public abstract class SceneChanger
    }
 
    /**
-    * DOCUMENT ME!
+    * Creates the menu bar.
     */
    private void initializeMenu()
    {

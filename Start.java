@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package blippy;
+
+package blippy.desktop;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,21 +11,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.*;
 
 /**
- *
+ * A start scene.  Simply displays directions and has
+ * a button to start the game.
  * @author Jared
  */
 class Start
    extends SceneChanger
 {
    /**
-    * DOCUMENT ME!
+    * Button to start.
     */
    private Button mStartBtn;
 
    /**
     * Creates a new Start object.
     *
-    * @param pBlippy DOCUMENT ME!
+    * @param pBlippy
     */
    public Start(Blippy pBlippy)
    {
@@ -38,9 +34,9 @@ class Start
    }
 
    /**
-    * DOCUMENT ME!
+    * Sets up the scene
     *
-    * @return DOCUMENT ME!
+    * @return
     */
    @Override
    public final Scene setup()

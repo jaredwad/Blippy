@@ -1,11 +1,18 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package blippy.desktop;
 
-import blippy.system.*;
 import java.util.*;
+
 import javafx.animation.*;
+
 import javafx.event.*;
+
 import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
@@ -15,71 +22,70 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import javafx.util.Duration;
 
 /**
- * This will control the game.  It has a timer that will talk
- * to the game class to switch the circle, as well as send results
- * to the results class.
- * 
+ *
  * @author Jared
  */
 public class GameHelper
 {
    /**
-    * Instance of the Blippy class being used.
+    * DOCUMENT ME!
     */
    private final Blippy mBlippy;
 
    /**
-    * Instance of game interface.
+    * DOCUMENT ME!
     */
    private final Game mGame;
 
    /**
-    * Results from the test.
+    * DOCUMENT ME!
     */
    private final double[] mResults;
 
    /**
-    * Time started.
+    * DOCUMENT ME!
     */
    private long mStartTime;
 
    /**
-    * Time ended.
+    * DOCUMENT ME!
     */
    private long mEndTime;
 
    /**
-    * Number of trials done.
+    * DOCUMENT ME!
     */
    private final int mGameIterations;
 
    /**
-    * Value to determine if the circle was clicked.
+    * DOCUMENT ME!
     */
    private Boolean isClicked;
 
    /**
-    * Todo when the test is over.
+    * DOCUMENT ME!
     */
    private final EventHandler<ActionEvent> mOnFinished;
 
    /**
-    * Amount of times circle has changed.
+    * DOCUMENT ME!
     */
    private int mCountChanges;
 
    /**
-    * Time to wait between trials.
+    * DOCUMENT ME!
     */
    private static final int WAIT_PERIOD = 3000;
 
    /**
-    * Timer
+    * DOCUMENT ME!
     */
    private Timeline mTimeline;
 
@@ -92,25 +98,25 @@ public class GameHelper
    private Timeline clickTimer;
 
    /**
-    * The error mp3 file.
+    * The beep mp3 file.
     */
    private final Media error;
 
    /**
-    * Will play the error mp3.
+    * Will play the beep mp3.
     */
    private MediaPlayer mp;
 
    /**
-    * Constructor for gameHelper.
-    * @param pBlippy - instance of main Blippy class
-    * @param pGame   - instance of game interface.
+    *
+    * @param pBlippy
+    * @param pGame
     */
    public GameHelper(Blippy pBlippy, Game pGame)
    {
       mBlippy = pBlippy;
       mGame = pGame;
-      error = new Media(ResourceGetter.getResource("/resources/error.mp3"));
+      error = new Media(getClass().getResource("error.mp3").toString());
       mp = new MediaPlayer(error);
       mGameIterations = 7;
       mCountChanges   = 0;
@@ -130,7 +136,6 @@ public class GameHelper
    }
 
    /**
-    * Setter for isClicked.
     *
     * @param pBool
     */
@@ -140,9 +145,9 @@ public class GameHelper
    }
 
    /**
-    * Determines if is Timeline
+    * DOCUMENT ME!
     *
-    * @return
+    * @return DOCUMENT ME!
     */
    public Boolean isTimelineSet()
    {
@@ -150,9 +155,8 @@ public class GameHelper
    }
 
    /**
-    * getter for isClicked
     *
-    * @return isClicked
+    * @return
     */
    public Boolean getIsClicked()
    {
@@ -160,9 +164,8 @@ public class GameHelper
    }
    
    /**
-    * Getter for Results.
-    *
-    * @return mResults
+    * 
+    * @return 
     */
    public double[] getResults()
    {
@@ -170,7 +173,7 @@ public class GameHelper
    }
 
    /**
-    * Stop and delete the timeline.
+    * DOCUMENT ME!
     */
    public void killTimeline()
    {
@@ -179,9 +182,9 @@ public class GameHelper
    }
 
    /**
-    * Pauses the game, resetting the circle once done.
+    * DOCUMENT ME!
     *
-    * @param pMessage
+    * @param pMessage DOCUMENT ME!
     */
    public synchronized void pauseGame(String pMessage)
    {
@@ -234,8 +237,7 @@ public class GameHelper
    }
 
    /**
-    * Builds the game. Synchronized because the 
-    * Timeline.stop() method is not
+    * synchronized because the Timeline.stop() method is not
     */
    public synchronized void game()
    {
@@ -283,7 +285,7 @@ public class GameHelper
    }
 
    /**
-    * Switches the circle 7 times, recording results.
+    *
     */
    private void doRandomCircleChange()
    {

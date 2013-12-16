@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package blippy;
+
+package blippy.desktop;
 
 import java.text.DecimalFormat;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
 import javafx.geometry.Insets;
-
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -31,24 +23,24 @@ class Results
    extends SceneChanger
 {
    /**
-    * DOCUMENT ME!
+    * Button to return to start.
     */
    private Button mStartBtn;
 
    /**
-    * DOCUMENT ME!
+    * Table to put data in.
     */
    private ListView mTable;
 
    /**
-    * DOCUMENT ME!
+    * List to display data.
     */
    private ObservableList<Text> mData;
 
    /**
     * Creates a new Results object.
     *
-    * @param pBlippy DOCUMENT ME!
+    * @param pBlippy
     */
    public Results(Blippy pBlippy)
    {
@@ -56,9 +48,9 @@ class Results
    }
 
    /**
-    * DOCUMENT ME!
+    * Sets the results.
     *
-    * @param pData DOCUMENT ME!
+    * @param pData
     */
    public void setResults(double[] pData)
    {
@@ -98,7 +90,7 @@ class Results
    }
 
    /**
-    * DOCUMENT ME!
+    * Creates the table to display
     */
    private void initializeTable()
    {
@@ -108,9 +100,9 @@ class Results
    }
 
    /**
-    * DOCUMENT ME!
+    * Creates the scene for results
     *
-    * @return DOCUMENT ME!
+    * @return
     */
    @Override
    public final Scene setup()

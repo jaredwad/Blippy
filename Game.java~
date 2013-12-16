@@ -1,7 +1,10 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package blippy.desktop;
 
-import blippy.system.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
@@ -49,16 +52,18 @@ class Game
    private MediaPlayer mp;
 
    /**
-    * determines if circle is green.
+    * DOCUMENT ME!
     */
    private Boolean isStartCircle;
 
    /**
     * Creates a new Game object.
     *
-    * @param pBlippy
+    * @param pBlippy DOCUMENT ME!
+    * @param pIsColorBlind DOCUMENT ME!
+    * @param pIsSoundTest DOCUMENT ME!
     */
-   public Game(Blippy pBlippy)
+   public Game(Blippy pBlippy, Boolean pIsColorBlind, Boolean pIsSoundTest)
    {
       super(pBlippy);
       mStart = new Circle();
@@ -68,13 +73,12 @@ class Game
 
       isReady = false;
 
-      beep = new Media(ResourceGetter.getResource("/resources/beep.mp3"));
+      beep = new Media(getClass().getResource("beep.mp3").toString());
       mp = new MediaPlayer(beep);
       isStartCircle = true;
    }
 
    /**
-    * Setter for isReady
     *
     * @param pReady
     */
@@ -84,9 +88,8 @@ class Game
    }
 
    /**
-    * Getter for isReady
     *
-    * @return isReady
+    * @return
     */
    public Boolean isReadyToBeClicked()
    {
@@ -94,9 +97,8 @@ class Game
    }
 
    /**
-    * Getter for mInstance
     *
-    * @return mInstance
+    * @return
     */
    public Game getInstance()
    {
@@ -104,9 +106,9 @@ class Game
    }
 
    /**
-    * Getter for isStartCircle
+    * DOCUMENT ME!
     *
-    * @return isStartCircle
+    * @return DOCUMENT ME!
     */
    public Boolean getIsStartCircle()
    {
@@ -114,8 +116,7 @@ class Game
    }
 
    /**
-    * Will swap the circle from red to green or
-    * green to red.
+    *
     */
    public void swapCircle()
    {
@@ -138,7 +139,9 @@ class Game
    }
 
    /**
-    * Will setup the scene.
+    * DOCUMENT ME!
+    *
+    * @return DOCUMENT ME!
     */
    @Override
    public final Scene setup()

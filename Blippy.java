@@ -1,73 +1,69 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package blippy;
+package blippy.desktop;
 
 import java.util.HashMap;
-
 import javafx.application.Application;
 import javafx.application.Platform;
-
 import javafx.scene.Scene;
-
 import javafx.stage.Stage;
 
 /**
- *
+ * This is the main class for the Blippy program,
+ * it will initialize everything required for the
+ * program to run.
+ * 
  * @author Jared
  */
 public class Blippy
         extends Application
 {
     /**
-     * DOCUMENT ME!
+     * Stage for Blippy
      */
     private Stage mStage;
 
     /**
-     * DOCUMENT ME!
+     * The blippy class itself.
      */
     private static Blippy mInstance;
 
     /**
-     * DOCUMENT ME!
+     * Start object.
      */
     private final Start mStart;
 
     /**
-     * DOCUMENT ME!
+     * Game object.
      */
     private final Game mGame;
 
     /**
-     * DOCUMENT ME!
+     * Gamehelper controller. Not final because
+     * it resets.
      */
-    private GameHelper mGameHelper; // not final because it resets
+    private GameHelper mGameHelper;
 
     /**
-     * DOCUMENT ME!
+     * Results of the test.
      */
     private final Results mResults;
 
     /**
-     * DOCUMENT ME!
+     * The current scene.
      */
     private String currentScene;
 
     /**
-     * DOCUMENT ME!
+     * to determine if colorblind.
      */
     private Boolean isColorBlind;
 
     /**
-     * DOCUMENT ME!
+     * to determine if sound test.
      */
     private Boolean isSoundTest;
 
     /**
-     * DOCUMENT ME!
+     * Storage for scenes.
      */
     private final HashMap<String, Scene> mScenes;
 
@@ -84,7 +80,7 @@ public class Blippy
         isSoundTest = false;
 
         mStart = new Start(this);
-        mGame = new Game(this, isColorBlind, isSoundTest);
+        mGame = new Game(this);
         mResults = new Results(this);
         mGameHelper = new GameHelper(this, mGame);
         mScenes = new HashMap<String, Scene>();
@@ -94,7 +90,8 @@ public class Blippy
 
     
     /**
-     *
+     * Getter for mStart.
+     * 
      * @return mStart
      */
     public Start getStart()
@@ -103,9 +100,9 @@ public class Blippy
     }
 
     /**
-     * DOCUMENT ME!
+     * Getter for currentScene.
      *
-     * @return DOCUMENT ME!
+     * @return mGameSetup
      */
     public String getCurrentScene()
     {
@@ -113,7 +110,8 @@ public class Blippy
     }
 
     /**
-     *
+     * Getter for mInstance.
+     * 
      * @return mInstance
      */
     public static Blippy getInstance()
@@ -142,9 +140,9 @@ public class Blippy
     }
 
     /**
-     * DOCUMENT ME!
-     * used?
-     * @return DOCUMENT ME!
+     * Getter for Results.
+     *
+     * @return mGameHelper.getResults
      */
     public double[] getResults()
     {
@@ -153,7 +151,7 @@ public class Blippy
 
     /////////////////////////////////////////////////////////// Setters
     /**
-     *
+     * Setter for isColorblind
      *
      * @param pIsColorBlind
      */
@@ -163,6 +161,7 @@ public class Blippy
     }
 
     /**
+     * Setter for isSoundTest
      *
      * @param pIsSoundTest
      */
@@ -173,7 +172,7 @@ public class Blippy
 
     ////////////////////////////////////////////////////////// Main Functions
     /**
-     *
+     * Calls pauseGame in mGameHelper
      *
      * @param pMessage
      */
@@ -183,8 +182,7 @@ public class Blippy
     }
 
     /**
-     *
-     *
+     *  Resets the game and resets the timer.
      */
     public void resetGame()
     {
@@ -202,7 +200,7 @@ public class Blippy
     }
     
     /**
-     * 
+     * Stops the time and resets the timer.
      */
     public void stopGame()
     {
@@ -210,12 +208,12 @@ public class Blippy
     }
 
     /**
-     * DOCUMENT ME!
+     * Will bring up about page.
      */
     public void showAbout()
     {
         String message = "\n                 Created by "
-                         + "\n                Josh Comish, "
+                         + "\n               Joshua Comish, "
                          + "\n              Jared Wadworth,\n "
                          + "           and John Michelsen \n"
                          + " in December of 2013 for Mr. Call\n";
@@ -223,7 +221,7 @@ public class Blippy
     }
 
     /**
-     * DOCUMENT ME!
+     * Builds the results screen.
      */
     public void generateResults()
     {
@@ -239,7 +237,7 @@ public class Blippy
     }
 
     /**
-     *
+     * Sets up the screens for the program.
      */
     private void initializeScenes()
     {
@@ -251,7 +249,7 @@ public class Blippy
     }
 
     /**
-     *
+     * Adds a scene.
      * @param pName
      * @param pScene
      */
@@ -261,8 +259,9 @@ public class Blippy
     }
 
     /**
+     * Builds all instances of all objects.
      *
-     * @param pName
+     * @param pName  
      */
     public void setup(String pName)
     {
