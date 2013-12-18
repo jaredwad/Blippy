@@ -199,7 +199,10 @@ public class GameHelper
     */
    public void killTimeline()
    {
-      mTimeline.stop();
+       if(mTimeline != null)
+       {
+           mTimeline.stop();
+       }
       mTimeline = null;
    }
 
